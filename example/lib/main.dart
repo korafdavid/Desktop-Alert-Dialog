@@ -59,7 +59,15 @@ class _MyAppState extends State<MyApp> {
               child: Text('Running on: $_platformVersion\n'),
             ),
             MaterialButton(onPressed: (){
-              createDialog(context);
+              createDialog(context,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  FlutterLogo(size: 40),
+                   Text('Command Pubspec Assits: Add/Update Dependencies resulted in an error. (Running the Contributed Command \'pubspec-assit.addDependency\' failed )'),
+                ],
+              )
+              );
             },
             onLongPress: (){
               showDialog(context: context, builder: (context){
