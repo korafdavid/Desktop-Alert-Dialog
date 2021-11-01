@@ -24,9 +24,9 @@ createDialog(BuildContext _, {Widget? child})async {
         return WindowBorder(
           width: 2,
           color: Colors.blue,
-          child: ConstrainedBox(
-            constraints : const BoxConstraints(minHeight: 150, maxWidth: 350),
-            child: DraggableCard(
+          child: DraggableCard(
+            child: ConstrainedBox(
+              constraints : const BoxConstraints(minHeight: 150, maxWidth: 350),
               child:  Column(
                 mainAxisSize: MainAxisSize.min,
             children: [
@@ -35,7 +35,7 @@ createDialog(BuildContext _, {Widget? child})async {
                     decoration: const BoxDecoration(),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       mainAxisSize: MainAxisSize.min,
+                      // mainAxisSize: MainAxisSize.min,
                       
                       children: [
                          Text(packageInfo.appName),
@@ -52,11 +52,11 @@ createDialog(BuildContext _, {Widget? child})async {
            
              Container(
                decoration: BoxDecoration(
-                 color: Colors.blue[300],
-                 border: const Border(top: BorderSide(width: 2))
+                 color: Colors.grey[100],
+                 border:  Border(top: BorderSide(width: 2, color: Colors.grey[200]!))
                ),
                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                 // mainAxisSize: MainAxisSize.min,
                  children: [
                     MaterialButton(onPressed: ()=>Navigator.of(context).pop(),color: Colors.blue, child: const Text('Close'))
                  ]
