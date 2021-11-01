@@ -16,41 +16,56 @@ class DesktopDialog {
 }
 
 ///For Creating a normall Dialog
-createDialog(BuildContext _)  {
+createDialog(BuildContext _, {Widget? child})async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return showGeneralDialog(
       context: _,
-       barrierColor: Colors.black,
-      barrierLabel: 'Barrier',
       pageBuilder: (BuildContext context, Animation<double> ii, Animation<double> d) {
-        return Center(
+        return WindowBorder(
+          width: 2,
+          color: Colors.blue,
           child: ConstrainedBox(
-          constraints : const BoxConstraints(minHeight: 150, minWidth: 150),
-          child:  Wrap(
-          children: [
-            WindowTitleBarBox(
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Desktop Dialog'),
+            constraints : const BoxConstraints(minHeight: 150, maxWidth: 350),
+            child: DraggableCard(
+              child:  Column(
+                mainAxisSize: MainAxisSize.min,
+            children: [
+              WindowTitleBarBox(
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       mainAxisSize: MainAxisSize.min,
                       
-                      CloseWindowButton(
-                                    onPressed: () => Navigator.of(context).pop(),
-                                  ),
-                    ],
-                  ),
-                )),
-               
-           const  FlutterLogo(size: 100),
-           Row(
-             children: [
-                MaterialButton(onPressed: ()=>Navigator.of(context).pop(), child: const Text('Close'))
-             ]
-           )
-          ],
+                      children: [
+                         Text(packageInfo.appName),
+                        
+                        CloseWindowButton(
+                         
+                                      onPressed: () => Navigator.of(context).pop(),
+                                    ),
+                      ],
                     ),
-          )
+                  )),
+              
+             child!,
+           
+             Container(
+               decoration: BoxDecoration(
+                 color: Colors.blue[300],
+                 border: const Border(top: BorderSide(width: 2))
+               ),
+               child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                 children: [
+                    MaterialButton(onPressed: ()=>Navigator.of(context).pop(),color: Colors.blue, child: const Text('Close'))
+                 ]
+               ),
+             )
+            ],
+                      ),
+            ),
+          ),
         );
       });
 }
@@ -141,6 +156,7 @@ class _DraggableCardState extends State<DraggableCard>
     );
   }
 } 
+
 
 //https://app.community.engage.redhat.com/e/er?s=17900033&lid=5033&elqTrackId=c8fd4498f2f44f2eb73e7514f66fd5eb&elq=869f4bbb9c354ac0ad6de5b6c8f21b26&elqaid=810&elqat=1
 
