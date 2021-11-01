@@ -16,60 +16,70 @@ class DesktopDialog {
 }
 
 ///For Creating a normall Dialog
-createDialog(BuildContext _, {Widget? child})async {
+createDialog(BuildContext _, {Widget? child, String? title}) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return showGeneralDialog(
       context: _,
-      pageBuilder: (BuildContext context, Animation<double> ii, Animation<double> d) {
-        return WindowBorder(
-          width: 2,
-          color: Colors.blue,
-          child: DraggableCard(
-            child: ConstrainedBox(
-              constraints : const BoxConstraints(minHeight: 150, maxWidth: 350),
-              child:  Column(
+      pageBuilder:
+          (BuildContext context, Animation<double> ii, Animation<double> d) {
+        return DraggableCard(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 120, maxWidth: 550),
+            child: WindowBorder(
+              width: 2,
+              color: Colors.grey,
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
-            children: [
-              WindowTitleBarBox(
-                  child: DecoratedBox(
+                children: [
+                  WindowTitleBarBox(
+                      child: DecoratedBox(
                     decoration: const BoxDecoration(),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       // mainAxisSize: MainAxisSize.min,
-                      
+
                       children: [
-                         Text(packageInfo.appName),
-                        
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(title ?? packageInfo.appName),
+                        ),
                         CloseWindowButton(
-                         
-                                      onPressed: () => Navigator.of(context).pop(),
-                                    ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
                       ],
                     ),
                   )),
-              
-             child!,
-           
-             Container(
-               decoration: BoxDecoration(
-                 color: Colors.grey[100],
-                 border:  Border(top: BorderSide(width: 2, color: Colors.grey[200]!))
-               ),
-               child: Row(
-                 // mainAxisSize: MainAxisSize.min,
-                 children: [
-                    MaterialButton(onPressed: ()=>Navigator.of(context).pop(),color: Colors.blue, child: const Text('Close'))
-                 ]
-               ),
-             )
-            ],
-                      ),
+                  child!,
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        border: Border(
+                            top: BorderSide(
+                                width: 2, color: Colors.grey[400]!))),
+                    child: Row(
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          MaterialButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              color: Colors.grey[300],
+                              child: const Text('Close'),
+                              shape: const RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: Colors.grey,
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  )),
+                        ]),
+                  )
+                ],
+              ),
             ),
           ),
         );
       });
 }
-
 
 // Command 'Pubspec Assist: Add/update dependencies' resulted in an error (Running the contributed command: 'pubspec-assist.addDependency' failed.)
 

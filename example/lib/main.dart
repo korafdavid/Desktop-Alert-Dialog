@@ -60,11 +60,19 @@ class _MyAppState extends State<MyApp> {
             ),
             MaterialButton(onPressed: (){
               createDialog(context,
+              title: 'Warning!',
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
-                  FlutterLogo(size: 40),
-                   Text('Command Pubspec Assits: Add/Update Dependencies resulted in an error. (Running the Contributed Command \'pubspec-assit.addDependency\' failed )'),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.clear, color: Colors.red, size: 40),
+                  ),
+                   Flexible(
+                     child: Text('Command Pubspec Assits: Add/Update Dependencies resulted in an error. (Running the Contributed Command \'pubspec-assit.addDependency\' failed )',
+                     softWrap: true ,
+                     ),
+                   ),
                 ],
               )
               );
