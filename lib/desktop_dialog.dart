@@ -14,10 +14,32 @@ class DesktopDialog {
     return version;
   }
 }
+/// Damn
+class SimpleDesktopDialog {
+  /// shit
+  Widget child;
+  BuildContext context;
+  SimpleDesktopDialog({
+  required this.child,
+  required this.context
+  });
+ 
+ @override
+ bu(){
+   return createDialog(context,child: child);
+ }
+   
+}
 
 ///For Creating a normall Dialog
-createDialog(BuildContext _, {Widget? child, String? title}) async {
+createDialog(BuildContext _,
+    {
+
+    ///This Should not be empty, [child] is the
+    required Widget child,
+    String? title}) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  
   return showGeneralDialog(
       context: _,
       pageBuilder:
@@ -49,7 +71,7 @@ createDialog(BuildContext _, {Widget? child, String? title}) async {
                       ],
                     ),
                   )),
-                  child!,
+                  child,
                   Container(
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -66,11 +88,11 @@ createDialog(BuildContext _, {Widget? child, String? title}) async {
                               color: Colors.grey[300],
                               child: const Text('Close'),
                               shape: const RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: Colors.grey,
-                                      width: 1,
-                                      style: BorderStyle.solid),
-                                  )),
+                                side: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1,
+                                    style: BorderStyle.solid),
+                              )),
                         ]),
                   )
                 ],
@@ -111,7 +133,7 @@ class _DraggableCardState extends State<DraggableCard>
     final unitVelocity = unitsPerSecond.distance;
 
     const spring = SpringDescription(
-      mass: 30,
+      mass: 20,
       stiffness: 1,
       damping: 1,
     );
@@ -127,9 +149,14 @@ class _DraggableCardState extends State<DraggableCard>
     _controller = AnimationController(vsync: this);
 
     _controller!.addListener(() {
-      setState(() {
-        _dragAlignment = _animation!.value;
-      });
+      // setState(() {
+      //   if (_animation!.value.x < -1 ||
+      //       _animation!.value.x > 1 ||
+      //       _animation!.value.y < -1 ||
+      //       _animation!.value.y > 1) {
+      //     _dragAlignment = _animation!.value;
+      //   }
+      // });
     });
   }
 
@@ -147,12 +174,29 @@ class _DraggableCardState extends State<DraggableCard>
         _controller!.stop();
       },
       onPanUpdate: (details) {
-        setState(() {
-          _dragAlignment += Alignment(
-            details.delta.dx / (size.width / 2),
-            details.delta.dy / (size.height / 2),
-          );
-        });
+
+
+
+        // switch (_dragAlignment) {
+        //   case :
+            
+        //     break;
+        //   default:
+        // }
+
+        if (_dragAlignment.x + (details.delta.dx / (size.width / 2) ) < 1.0 ||
+            _dragAlignment.x + (details.delta.dx / (size.width / 2)) > -1.0) {
+          setState(() {
+            _dragAlignment += Alignment(
+              details.delta.dx / (size.width / 2),
+              details.delta.dy / (size.height / 2),
+            );
+          });
+        }
+        if (_dragAlignment.x > 1 || _dragAlignment.x < -1) {
+          _controller!.stop();
+          print('out of bounds');
+        }
       },
       onPanEnd: (details) {
         _runAnimation(details.velocity.pixelsPerSecond, size);
@@ -165,14 +209,11 @@ class _DraggableCardState extends State<DraggableCard>
       ),
     );
   }
-} 
-
+}
 
 //https://app.community.engage.redhat.com/e/er?s=17900033&lid=5033&elqTrackId=c8fd4498f2f44f2eb73e7514f66fd5eb&elq=869f4bbb9c354ac0ad6de5b6c8f21b26&elqaid=810&elqat=1
 
-
 //https://app.community.engage.redhat.com/e/er?s=17900033&lid=4748&elqTrackId=54223c316bb6431bb37008fba554b8b4&elq=dbb906686e9c4ac0bdc44801a5a2708a&elqaid=780&elqat=1
-
 
 //  DraggableCard(
 //             child: WindowBorder(
@@ -190,7 +231,7 @@ class _DraggableCardState extends State<DraggableCard>
 //                     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //                     //         children: [
 //                     //           const Text('Desktop Dialog'),
-                              
+
 //                     //           CloseWindowButton(
 //                     //                         onPressed: () => Navigator.of(context).pop(),
 //                     //                       ),
@@ -209,3 +250,6 @@ class _DraggableCardState extends State<DraggableCard>
 //               ),
 //             ),
 //           ),
+
+
+
