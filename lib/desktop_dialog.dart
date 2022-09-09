@@ -14,21 +14,18 @@ class DesktopDialog {
     return version;
   }
 }
+
 /// Damn
 class SimpleDesktopDialog {
   /// shit
   Widget child;
   BuildContext context;
-  SimpleDesktopDialog({
-  required this.child,
-  required this.context
-  });
- 
- @override
- bu(){
-   return createDialog(context,child: child);
- }
-   
+  SimpleDesktopDialog({required this.child, required this.context});
+
+  @override
+  bu() {
+    return createDialog(context, child: child);
+  }
 }
 
 ///For Creating a normall Dialog
@@ -39,7 +36,7 @@ createDialog(BuildContext _,
     required Widget child,
     String? title}) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  
+
   return showGeneralDialog(
       context: _,
       pageBuilder:
@@ -123,7 +120,7 @@ class _DraggableCardState extends State<DraggableCard>
     _animation = _controller!.drive(
       AlignmentTween(
         begin: _dragAlignment,
-        end: _dragAlignment,
+        end: _dragAlignment.x > 1 ? const Alignment(0, 0) : _dragAlignment,
       ),
     );
 
@@ -149,14 +146,23 @@ class _DraggableCardState extends State<DraggableCard>
     _controller = AnimationController(vsync: this);
 
     _controller!.addListener(() {
-      // setState(() {
-      //   if (_animation!.value.x < -1 ||
-      //       _animation!.value.x > 1 ||
-      //       _animation!.value.y < -1 ||
-      //       _animation!.value.y > 1) {
-      //     _dragAlignment = _animation!.value;
-      //   }
-      // });
+      setState(() {
+        if (_animation!.value.x < -1) {
+          _dragAlignment = Alignment(-1, _animation!.value.y);
+        }
+
+        if (_animation!.value.x > 1) {
+          _dragAlignment = Alignment(1, _animation!.value.y);
+        }
+
+        if (_animation!.value.y < -1) {
+          _dragAlignment = Alignment(_animation!.value.x, -1);
+        }
+
+        if (_animation!.value.y > 1) {
+          _dragAlignment = Alignment(_animation!.value.x, 1);
+        }
+      });
     });
   }
 
@@ -174,17 +180,14 @@ class _DraggableCardState extends State<DraggableCard>
         _controller!.stop();
       },
       onPanUpdate: (details) {
-
-
-
         // switch (_dragAlignment) {
         //   case :
-            
+
         //     break;
         //   default:
         // }
 
-        if (_dragAlignment.x + (details.delta.dx / (size.width / 2) ) < 1.0 ||
+        if (_dragAlignment.x + (details.delta.dx / (size.width / 2)) < 1.0 ||
             _dragAlignment.x + (details.delta.dx / (size.width / 2)) > -1.0) {
           setState(() {
             _dragAlignment += Alignment(
